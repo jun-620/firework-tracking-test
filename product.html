@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品一覧 - Firework検証用</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            color: #e44d26;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .buy-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .buy-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>商品一覧</h1>
+    <div class="product-list">
+        <!-- 商品A -->
+        <div class="product-card">
+            <div class="product-name">商品A</div>
+            <div class="product-price">¥10,000</div>
+            <p>ID: P001</p>
+            <a href="detail_a.html" class="buy-button">詳細を見る</a>
+        </div>
+
+        <!-- 商品B -->
+        <div class="product-card">
+            <div class="product-name">商品B</div>
+            <div class="product-price">¥5,000</div>
+            <p>ID: P002</p>
+            <a href="detail_b.html" class="buy-button">詳細を見る</a>
+        </div>
+
+        <!-- 商品C -->
+        <div class="product-card">
+            <div class="product-name">商品C</div>
+            <div class="product-price">¥3,000</div>
+            <p>ID: P003</p>
+            <a href="detail_c.html" class="buy-button">詳細を見る</a>
+        </div>
+    </div>
+</body>
+
+</html>

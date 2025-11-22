@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購入完了 - Firework検証用</title>
+
+    <!-- ============================================================ -->
+    <!-- GTMスニペットをここに貼り付けてください (HEAD内) -->
+    <!-- 
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXX');</script>
+    -->
+    <!-- ============================================================ -->
+
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .success-message {
+            color: #28a745;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .order-details {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ============================================================ -->
+    <!-- GTMスニペット (BODY直後) -->
+    <!-- 
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    -->
+    <!-- ============================================================ -->
+
+    <div class="success-message">購入ありがとうございます！</div>
+
+    <div class="order-details">
+        <h3>注文詳細</h3>
+        <p>商品ID: <span id="display-item-id">-</span></p>
+        <p>金額: <span id="display-order-value">-</span> 円</p>
+    </div>
+
+    <p><a href="product.html">商品一覧に戻る</a></p>
+
+    <script>
+        // URLパラメータを取得する関数
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                order_value: params.get('order_value'),
+                item_id: params.get('item_id')
+            };
+        }
+
+        // メイン処理
+        (function () {
+            // 1. パラメータ取得
+            const params = getQueryParams();
+            const orderValue = params.order_value;
+            const itemId = params.item_id;
+
+            // 画面表示用
+            if (orderValue) document.getElementById('display-order-value').textContent = parseInt(orderValue).toLocaleString();
+            if (itemId) document.getElementById('display-item-id').textContent = itemId;
+
+            // 2. dataLayerの定義 (まだ存在しない場合)
+            window.dataLayer = window.dataLayer || [];
+
+            // 3. 購入完了イベントをdataLayerにプッシュ
+            if (orderValue && itemId) {
+                const purchaseData = {
+                    event: 'purchase_complete', // 任意のイベント名
+                    order_value: orderValue,    // 必須: 金額
+                    currency: 'JPY',            // 必須: 通貨
+                    item_id: itemId             // 商品ID
+                };
+
+                console.log('Pushing to dataLayer:', purchaseData);
+                window.dataLayer.push(purchaseData);
+            } else {
+                console.warn('パラメータが不足しているため、dataLayerへの送信をスキップしました。');
+            }
+        })();
+    </script>
+</body>
+
+</html>
