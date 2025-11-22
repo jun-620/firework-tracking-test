@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed | Firework</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- ============================================================ -->
+    <!-- GTM Snippet (HEAD) -->
+    <!-- 
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXX');</script>
+    -->
+    <!-- ============================================================ -->
+</head>
+
+<body>
+    <!-- ============================================================ -->
+    <!-- GTM Snippet (BODY) -->
+    <!-- 
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    -->
+    <!-- ============================================================ -->
+
+    <div class="container">
+        <div class="thankyou-wrapper">
+            <div class="success-icon">✓</div>
+            <h1>Thank You for Your Order</h1>
+            <p class="detail-desc">Your transaction has been completed successfully.</p>
+
+            <div class="order-summary">
+                <div class="summary-row">
+                    <span class="summary-label">Order ID</span>
+                    <span class="summary-value" id="display-item-id">-</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Total Amount</span>
+                    <span class="summary-value">¥<span id="display-order-value">-</span></span>
+                </div>
+            </div>
+
+            <div>
+                <a href="product.html" class="btn">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                order_value: params.get('order_value'),
+                item_id: params.get('item_id')
+            };
+        }
+
+        (function () {
+            const params = getQueryParams();
+            const orderValue = params.order_value;
+            const itemId = params.item_id;
+
+            if (orderValue) document.getElementById('display-order-value').textContent = parseInt(orderValue).toLocaleString();
+            if (itemId) document.getElementById('display-item-id').textContent = itemId;
+
+            window.dataLayer = window.dataLayer || [];
+
+            if (orderValue && itemId) {
+                const purchaseData = {
+                    event: 'purchase_complete',
+                    order_value: orderValue,
+                    currency: 'JPY',
+                    item_id: itemId
+                };
+
+                console.log('Pushing to dataLayer:', purchaseData);
+                window.dataLayer.push(purchaseData);
+            } else {
+                console.warn('Missing parameters, skipping dataLayer push.');
+            }
+        })();
+    </script>
+</body>
+
+</html>
